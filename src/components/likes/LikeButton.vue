@@ -13,8 +13,8 @@
 // import { actions } from 'astro:actions'
 
 import { ref, watch } from 'vue'
-// import confetti from 'canvas-confetti'
-// import debounce from 'lodash.debounce'
+import confetti from 'canvas-confetti'
+import debounce from 'lodash.debounce'
 
 interface Props {
   postId: string
@@ -26,25 +26,24 @@ const likeCount = ref(0)
 const likeClicks = ref(0)
 const isLoading = ref(true)
 
-// watch(
-//   likeCount,
-//   debounce(() => {
-//     fetch(`/api/posts/likes/${props.postId}`, {
-//       method: 'PUT',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({ likes: likeClicks.value })
-//     })
+watch(
+  likeCount,
+  debounce(() => {
+    fetch(`/api/likes/${props.postId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ likes: likeClicks.value })
+    })
 
-//     likeClicks.value = 0
-//   }, 500)
-// )
+    likeClicks.value = 0
+  }, 500)
+)
 
 const likePost = () => {
-  console.log('Hola')
-  // likeCount.value++
-  // likeClicks.value++
+  likeCount.value++
+  likeClicks.value++
   //   const { data, error } = await actions.getGreeting({
   //     age: 39,
   //     name: 'Fernando',
@@ -54,20 +53,19 @@ const likePost = () => {
   //     return alert('Algo salió mal')
   //   }
   //   console.log({ data })
-  //   confetti({
-  //     particleCount: 100,
-  //     spread: 70,
-  //     origin: {
-  //       x: Math.random(),
-  //       y: Math.random() - 0.2
-  //     }
-  //   })
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: {
+      x: Math.random(),
+      y: Math.random() - 0.2
+    }
+  })
 }
 
 const getCurrentLikes = async () => {
   const resp = await fetch(`/api/likes/${props.postId}`)
 
-  console.log(resp)
   if (!resp.ok) return
 
   const data = await resp.json()

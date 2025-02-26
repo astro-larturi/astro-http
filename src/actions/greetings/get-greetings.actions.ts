@@ -9,8 +9,6 @@ export const getGreeting = defineAction({
   }),
 
   handler: async ({ name, age, isActive }) => {
-    console.log({ name, age, isActive })
-
     return `Hello, ${name}!`
   }
 })

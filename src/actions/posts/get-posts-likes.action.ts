@@ -8,8 +8,6 @@ export const getPostsLikes = defineAction({
   handler: async (postId) => {
     const [posts] = await db.select().from(Posts).where(eq(Posts.id, postId))
 
-    console.log(222)
-
     if (!posts) {
       return { likes: 0, exists: false }
     }

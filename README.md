@@ -5,8 +5,12 @@
 - Astro 5.1.5
 - Node 20.12.2
 - Tailwind CSS
-- Astro db
+- PostgreSQL (NeonDB)
 - Isla con Vue.js
+
+## Variables de entorno
+
+- Crear el .env en base al template con las credenciales de la base de datos
 
 ## Install dependencies
 
@@ -24,4 +28,15 @@ npm run dev
 
 ```bash
 npm run build
+```
+
+## Prisma
+
+```bash
+npx prisma init   
+
+npx prisma db pull 
+
+npx prisma generate
+
 ```

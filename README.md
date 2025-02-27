@@ -40,3 +40,23 @@ npx prisma db pull
 npx prisma generate
 
 ```
+
+## Api Endpoints
+
+### GET Clients
+
+```bash
+curl --location 'http://localhost:4321/api/clients'
+```
+
+### POST Client
+
+```bash
+curl --location 'http://localhost:4321/api/clients' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Cande",
+    "age": 9,
+    "is_active": false
+}'
+```

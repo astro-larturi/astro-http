@@ -1,9 +1,7 @@
-import { getGreeting } from './greetings/get-greetings.actions'
-import { getPostsLikes } from './posts/get-posts-likes.action'
-import { updatePostLikes } from './posts/update-posts-likes.action'
+import { getLikes } from './posts/get-likes.action'
+import { updateLikeCount } from './posts/update-like-count.action'
 
 export const server = {
-  getGreeting,
-  getPostsLikes,
-  updatePostLikes
+  getLikes,
+  updateLikeCount
 }

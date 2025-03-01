@@ -1,18 +1,15 @@
 <template>
-  <div v-if="isLoading">Loading...</div>
+  <span v-if="isLoading">Loading...</span>
 
   <button v-else-if="likeCount === 0" @click="likePost">Like this post</button>
 
-  <button v-else @click="likePost">
-    Likes
-    <span>{{ likeCount }}</span>
-  </button>
+  <button v-else @click="likePost">Likes {{ likeCount }}</button>
 </template>
 
 <script lang="ts" setup>
 import { actions } from 'astro:actions'
-
 import { ref, watch } from 'vue'
+
 import confetti from 'canvas-confetti'
 import debounce from 'lodash.debounce'
 
@@ -28,10 +25,11 @@ const isLoading = ref(true)
 
 watch(
   likeCount,
-  debounce(async () => {
-    await actions.updatePostLikes({
-      postId: props.postId,
-      increment: likeClicks.value
+  debounce((newValue, oldValue) => {
+    console.log(`Enviando ${likeClicks.value}`)
+    actions.updateLikeCount({
+      increment: likeClicks.value,
+      postId: props.postId
     })
 
     likeClicks.value = 0
@@ -39,8 +37,10 @@ watch(
 )
 
 const likePost = async () => {
-  likeCount.value++
-  likeClicks.value++
+  console.log('like +1')
+
+  likeCount.value += 1
+  likeClicks.value += 1
 
   confetti({
     particleCount: 100,
@@ -53,13 +53,10 @@ const likePost = async () => {
 }
 
 const getCurrentLikes = async () => {
-  const { data, error } = await actions.getPostsLikes(props.postId)
-
+  const { data, error } = await actions.getLikes(props.postId)
   if (error) {
-    console.error(error)
-    return
+    return alert('No se pudo leer el postID')
   }
-
   likeCount.value = data.likes
   isLoading.value = false
 }

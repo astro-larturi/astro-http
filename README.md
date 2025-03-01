@@ -60,3 +60,7 @@ curl --location 'http://localhost:4321/api/clients' \
     "is_active": false
 }'
 ```
+
+### Seed Database
+
+<http://localhost:4321/api/seed>
